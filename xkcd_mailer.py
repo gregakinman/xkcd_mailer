@@ -27,6 +27,8 @@ from bs4 import BeautifulSoup as BS
 from PIL import Image
 import requests
 
+from recipients import recipients
+
 def main():
 
     """
@@ -54,7 +56,7 @@ class XKCDMailer(object):
         # This is a throwaway email address I made just for this instance. Please don't use it - make your own.
         # Also, that password doesn't go to anything else, and there's no sensitive information in that inbox.
         self.send_from = "xkcddaemon@gmail.com"
-        self.send_to = ["gregakinman@gmail.com"]
+        self.send_to = recipients
         self.password = "TendeBeneAltaPete"
         self.dump_dir_path = "/Users/gregakinman/Google Drive/Work/Projects/scripts/xkcd_mailer/comics/"
 
