@@ -87,12 +87,13 @@ def email_sender(comic_filename, mouseover_text, comic_title, comic_number, comi
     :param comic_id:        A string that uniquely identifies this comic (combining the metadata).
     """
 
-    send_from_and_to = "gregakinman@gmail.com"
+    send_from = "xkcddaemon@gmail.com"
+    send_to = ["gregakinman@gmail.com"]
 
     # Constructs the email message, including text, the image attachment, and metadata.
     msg = MIMEMultipart(
-        From=send_from_and_to,
-        To=send_from_and_to,
+        From=send_from,
+        To=", ".join(send_to),
     )
     msg["Subject"] = comic_id
     msg.attach(MIMEText("Mouseover text: \"" + mouseover_text + "\""))
@@ -102,8 +103,8 @@ def email_sender(comic_filename, mouseover_text, comic_title, comic_number, comi
     # Opens a Gmail SMTP server and sends the email.
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login(send_from_and_to, "zimdbknowmporwhb")
-    server.sendmail(send_from_and_to, send_from_and_to, msg.as_string())
+    server.login(send_from, "TendeBeneAltaPete")
+    server.sendmail(send_from, send_to, msg.as_string())
     server.quit()
 
 
