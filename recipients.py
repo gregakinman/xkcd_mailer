@@ -6,5 +6,6 @@ recipients = [
     "gregakinman@gmail.com",
     "jfk2@rice.edu",
     "sahoo@rice.edu",
-    "saltesta@gmail.com"
+    "saltesta@gmail.com",
+    "snormoyle@gmail.com"
 ]
