@@ -11,7 +11,7 @@ Requirements/Dependencies:
 - [BeautifulSoup 4.3.2](http://www.crummy.com/software/BeautifulSoup/) (`$ pip install beautifulsoup4`)
 - [Python Imaging Library (PIL) 1.1.7](http://www.pythonware.com/products/pil/) (`$ pip install PIL`)
 - [Requests 2.5.0](http://docs.python-requests.org/en/latest/) (`$ pip install requests`)
-- a) A Unix-like system (so that you have `cron`) and knowledge of or ability to learn how to set up a `cron` job with a specific `crontab` file[^1] OR b) knowledge of how to run a `cron`-like process on your own system
+- a) A Unix-like system (so that you have `cron`) and knowledge of or ability to learn how to set up a `cron` job with a specific `crontab` file OR b) knowledge of how to run a `cron`-like process on your own system
 
 Usage:
 ---
@@ -24,6 +24,3 @@ TODO:
 ---
 
 - I might change this to have a `cron` job running every weekday to check for a new post, since I read somewhere that sometimes xkcd updates more often than its normal MWF.
-
-[^1]:
-In case you're wondering: [here]()'s how.
