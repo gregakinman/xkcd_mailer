@@ -1,2 +1,5 @@
 # Ignores all xkcd image files.
 comics
+
+# Ignores compiled imports.
+*.pyc
