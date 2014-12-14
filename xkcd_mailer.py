@@ -122,7 +122,7 @@ class XKCDMailer(object):
         # Constructs the email message, including text, the image attachment, and metadata.
         msg = MIMEMultipart(From=self.send_from, To=", ".join(self.send_to))
         msg["Subject"] = self.comic_id
-        msg.attach(MIMEText("Today's xkcd - enjoy!\nMouseover text: \"" + self.mouseover_text + "\""))
+        msg.attach(MIMEText("Today's xkcd - enjoy!\n\nMouseover text: \"" + self.mouseover_text + "\""))
         with open(self.dump_dir_path + self.comic_filename, "rb") as f:
             msg.attach(MIMEImage(f.read()))
 
