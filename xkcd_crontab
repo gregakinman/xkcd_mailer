@@ -1,2 +1,3 @@
+# PYTHONPATH points to the location of the third-party library modules in xkcd_mailer.py
 PYTHONPATH=$HOME:/usr/local/lib/python2.7/site-packages/
 * * * * Mon,Wed,Fri ~/"Google Drive"/Work/Projects/scripts/xkcd_mailer/xkcd_mailer.py

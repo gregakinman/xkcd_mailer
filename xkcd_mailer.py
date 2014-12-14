@@ -29,10 +29,13 @@ import requests
 
 def main():
 
+    """
+    Main function. Instantiates and runs the process.
+    """
+
     mailer = XKCDMailer()
     mailer.run()
 
-    print "RAN THE SCRIPT"
 
 class XKCDMailer(object):
 
@@ -44,12 +47,16 @@ class XKCDMailer(object):
 
         """
         Constructs a new instance, initially with just to and from designations.
+
+        :param self:    The current instance.
         """
 
+        # This is a throwaway email address I made just for this instance. Please don't use it - make your own.
+        # Also, that password doesn't go to anything else, and there's no sensitive information in that inbox.
         self.send_from = "xkcddaemon@gmail.com"
         self.send_to = ["gregakinman@gmail.com"]
+        self.password = "TendeBeneAltaPete"
         self.dump_dir_path = "/Users/gregakinman/Google Drive/Work/Projects/scripts/xkcd_mailer/comics/"
-
 
     def run(self):
 
@@ -64,7 +71,6 @@ class XKCDMailer(object):
 
         # Sends email.
         self.__email_sender()
-
 
     def __comic_getter(self):
 
@@ -100,7 +106,6 @@ class XKCDMailer(object):
             with open(self.dump_dir_path + self.comic_id + " - mouseover text.txt", "wb") as f:
                 f.write(self.mouseover_text)
 
-
     def __email_sender(self):
 
         """
@@ -122,7 +127,7 @@ class XKCDMailer(object):
         # Opens a Gmail SMTP server and sends the email.
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        server.login(self.send_from, "TendeBeneAltaPete")
+        server.login(self.send_from, self.password)
         server.sendmail(self.send_from, self.send_to, msg.as_string())
         server.quit()
 
