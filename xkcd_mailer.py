@@ -21,21 +21,23 @@ from email.mime.text import MIMEText
 import re
 import smtplib
 from StringIO import StringIO
+import sys
 
 # Third-party web and image scraping libraries.
 from bs4 import BeautifulSoup as BS
 from PIL import Image
 import requests
 
-from recipients import recipients
+# Imports outsourced mailing list module.
+from recipients import recipients as RECIPIENTS
 
-def main():
+def main(recipients):
 
     """
     Main function. Instantiates and runs the process.
     """
 
-    mailer = XKCDMailer()
+    mailer = XKCDMailer(recipients)
     mailer.run()
 
 
@@ -45,7 +47,7 @@ class XKCDMailer(object):
     Wrapper class for xkcd-emailing metadata and functionality.
     """
 
-    def __init__(self):
+    def __init__(self, recipients):
 
         """
         Constructs a new instance, initially with just to and from designations.
@@ -56,6 +58,7 @@ class XKCDMailer(object):
         # This is a throwaway email address I made just for this instance. Please don't use it - make your own.
         # Also, that password doesn't go to anything else, and there's no sensitive information in that inbox.
         self.send_from = "xkcddaemon@gmail.com"
+        # TODO: CHANGE BACK ZOMG
         self.send_to = recipients
         self.password = "TendeBeneAltaPete"
         self.dump_dir_path = "/Users/gregakinman/Google Drive/Work/Projects/scripts/xkcd_mailer/comics/"
@@ -117,12 +120,9 @@ class XKCDMailer(object):
         """
 
         # Constructs the email message, including text, the image attachment, and metadata.
-        msg = MIMEMultipart(
-            From=self.send_from,
-            To=", ".join(self.send_to),
-        )
+        msg = MIMEMultipart(From=self.send_from, To=", ".join(self.send_to))
         msg["Subject"] = self.comic_id
-        msg.attach(MIMEText("Mouseover text: \"" + self.mouseover_text + "\""))
+        msg.attach(MIMEText("Today's xkcd - enjoy!\nMouseover text: \"" + self.mouseover_text + "\""))
         with open(self.dump_dir_path + self.comic_filename, "rb") as f:
             msg.attach(MIMEImage(f.read()))
 
@@ -135,4 +135,9 @@ class XKCDMailer(object):
 
 
 if __name__ == "__main__":
-    main()
+    # Optional command-line args: any number of specific emails can be specified on the command-line.
+    if len(sys.argv) > 1:
+        main(sys.argv[1:])
+    # If no specific emails are specified (as in the cron job), sends to all recipients on the mailing list.
+    else:
+        main(RECIPIENTS)
