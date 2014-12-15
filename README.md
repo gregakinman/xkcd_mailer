@@ -3,7 +3,7 @@ xkcd "daemon"
 
 Automatically delivers xkcd to your mailbox (via a `cron` job), every day the comic is updated (which is every Monday, Wednesday, and Friday)! Also records a local backup of the comic for those rainy days when the entire Internet goes out but you still want to read every xkcd released since you created the `cron` job. Never forget to read the funniest webcomic in the world again. Oh, and, of course I remembered to grab the mouseover text, too.
 
-If you want to receive these updates yourself, set up your own `cron` job by copying what I do! Or, if you know me personally, let me know, and I can add you to my mailing list in a flash. That is, as long as I still have fewer than 500 people signed up, due to Gmail's `SMTP` limits.
+If you want to receive these updates yourself, set up your own `cron` job by copying what I do! You can also submit a pull request to add your name to the list in `recipients.py`. Or, if you know me personally, let me know, and I can add you to my mailing list in a flash. That is, as long as I still have fewer than 500 people signed up, due to Gmail's `SMTP` limits.
 
 Requirements/Dependencies:
 ---
