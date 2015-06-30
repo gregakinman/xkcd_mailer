@@ -45,7 +45,7 @@ class XKCDMailer(object):
         page_request = requests.get("http://www.xkcd.com")
 
         # Quits if the most recent xkcd has already been delivered.
-        with open("last_read") as f:
+        with open("/Users/gregakinman/google_drive/Work/Projects/scripts/xkcd_mailer/last_read") as f:
             last_read = f.read().rstrip()
             current_version = re.search("Permanent link to this comic: http://xkcd.com/([0-9]+)/",
                     page_request.text).groups()[0]
@@ -57,7 +57,7 @@ class XKCDMailer(object):
             else:
                 self.addition_text = ""
 
-        with open("last_read", "w") as f:
+        with open("/Users/gregakinman/google_drive/Work/Projects/scripts/xkcd_mailer/last_read", "w") as f:
             f.write(current_version)
 
         soup = BS(page_request.text)
