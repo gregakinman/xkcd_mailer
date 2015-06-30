@@ -13,6 +13,7 @@ from PIL import Image
 import requests
 
 from recipients import recipients as RECIPIENTS
+from password import password as PASSWORD
 
 def main(recipients):
 
@@ -28,18 +29,37 @@ class XKCDMailer(object):
         # Also, that password doesn't go to anything else, and there's no sensitive information in that inbox.
         self.send_from = "xkcddaemon@gmail.com"
         self.send_to = recipients
-        self.password = "TendeBeneAltaPete"
+        self.password = PASSWORD
         self.dump_dir_path = "/Users/gregakinman/google_drive/Work/Projects/scripts/xkcd_mailer/comics/"
+
 
     def run(self):
 
         self.__get_comic()
         self.__send_mail()
 
+
     def __get_comic(self):
 
         # Pulls the source code into a DOM tree.
         page_request = requests.get("http://www.xkcd.com")
+
+        # Quits if the most recent xkcd has already been delivered.
+        with open("last_read") as f:
+            last_read = f.read().rstrip()
+            current_version = re.search("Permanent link to this comic: http://xkcd.com/([0-9]+)/",
+                    page_request.text).groups()[0]
+            if last_read == current_version:
+                exit(0)
+            elif int(current_version) - int(last_read) > 1:
+                self.addition_text = "\nYou're behind on xkcd and should catch up. The last one you read was " + \
+                        last_read + ".\n"
+            else:
+                self.addition_text = ""
+
+        with open("last_read", "w") as f:
+            f.write(current_version)
+
         soup = BS(page_request.text)
 
         # Gets the comic image and title and the mouseover text from the div in which the comic lives.
@@ -62,12 +82,14 @@ class XKCDMailer(object):
             with open(self.dump_dir_path + self.comic_id + " - mouseover text.txt", "wb") as f:
                 f.write(self.mouseover_text)
 
+
     def __send_mail(self):
 
         # Constructs the email message, including text, the image attachment, and metadata.
         msg = MIMEMultipart(From=self.send_from, To=", ".join(self.send_to))
         msg["Subject"] = self.comic_id
-        msg.attach(MIMEText("Today's xkcd - enjoy!\n\nMouseover text: \"" + self.mouseover_text + "\""))
+        msg.attach(MIMEText("Today's xkcd - enjoy!\n\nMouseover text: \"" + self.mouseover_text + "\"\n"))
+        msg.attach(MIMEText(self.addition_text))
         with open(self.dump_dir_path + self.comic_filename, "rb") as f:
             msg.attach(MIMEImage(f.read()))
 

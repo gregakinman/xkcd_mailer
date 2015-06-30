@@ -4,6 +4,7 @@ comics
 # Ignores compiled imports.
 *.pyc
 
-# So that I don't put my password on the Internet in plain text. Or my friends' email addresses.
-password
+# So that I don't put my password on the Internet in plain text. Or my friends' email addresses. Or random stuff.
+password.py
 recipients.py
+last_read
